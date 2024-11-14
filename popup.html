@@ -1,11 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Network Logs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Scheduler</title>
 </head>
 <body>
-  <button id="viewLogs">View Network Logs</button>
-  <div id="logsOutput"></div>
-  <script src="popup.js"></script>
+    <h2>Schedule a Meeting</h2>
+    <form id="meetingForm">
+        <label for="organizer">Organizer Email:</label>
+        <input type="email" id="organizer" name="organizer" value="" required><br><br>
+
+        <label for="requiredAttendees">Required Attendees (comma-separated):</label>
+        <input type="text" id="requiredAttendees" name="requiredAttendees" value="" required><br><br>
+
+        <label for="optionalAttendees">Optional Attendees (comma-separated):</label>
+        <input type="text" id="optionalAttendees" name="optionalAttendees"><br><br>
+
+        <label for="meetingDuration">Meeting Duration (minutes):</label>
+        <input type="number" id="meetingDuration" name="meetingDuration" value="30" required><br><br>
+
+        <label for="searchStartTime">Search Start Time:</label>
+        <input type="datetime-local" id="searchStartTime" name="searchStartTime" value="2024-11-14T08:00" required><br><br>
+
+        <label for="searchEndTime">Search End Time:</label>
+        <input type="datetime-local" id="searchEndTime" name="searchEndTime" value="2024-11-21T08:00" required><br><br>
+
+        <label for="restrictSuggestionsToWorkHours">Restrict to Work Hours:</label>
+        <input type="checkbox" id="restrictSuggestionsToWorkHours" name="restrictSuggestionsToWorkHours" checked><br><br>
+
+        <label for="suggestionsResultTimeZone">Timezone:</label>
+        <select id="suggestionsResultTimeZone" name="suggestionsResultTimeZone" required>
+            <option value="Pacific Standard Time">Pacific Standard Time</option>
+            <option value="Eastern Standard Time">Eastern Standard Time</option>
+            <option value="Central Standard Time">Central Standard Time</option>
+            <option value="Mountain Standard Time">Mountain Standard Time</option>
+            <option value="UTC">UTC</option>
+            <option value="Greenwich Mean Time">Greenwich Mean Time</option>
+            <option value="Central European Time">Central European Time</option>
+            <option value="Japan Standard Time">Japan Standard Time</option>
+            <option value="Australian Eastern Standard Time">Australian Eastern Standard Time</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+        <div id="logsOutput"><div id="calendar" class="calendar"></div></div>
+        <script src="popup.js"></script>
+    </form>
 </body>
 </html>
+
+
+
+<style>
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  .day {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+  }
+  .time-slot {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  .no-conflicts { background-color: green; }
+  .low-conflicts { background-color: yellow; color: black; }
+  .high-conflicts { background-color: red; }
+</style>
