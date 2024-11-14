@@ -114,6 +114,28 @@ function handleApiResponse(data) {
         const timeSlotEl = document.createElement('div');
         timeSlotEl.classList.add('time-slot', getColorClass(conflicts));
         timeSlotEl.textContent = `${startTime.getHours()}:${startTime.getMinutes().toString().padStart(2, '0')}`;
+      const detailsEl = document.createElement('div');
+      detailsEl.classList.add('time-slot-details');
+
+      const requiredAttendees = suggestion.RequiredAttendees.filter(att => att.Email).length;
+      const optionalAttendees = suggestion.OptionalAttendees.filter(att => att.Email).length;
+      const NumOfConflicts = suggestion.NumOfConflicts;
+
+      if (conflicts > 0) {
+        let conflictsHTML = `<strong>${requiredAttendees + optionalAttendees - NumOfConflicts} Attendees for this meeting.</strong><br><strong>Conflicts:</strong><br>`;
+        for (const [email, conflictDetails] of Object.entries(suggestion.Conflicts)) {
+          conflictDetails.forEach(conflict => {
+            conflictsHTML += `
+              <u>${email}</u><br>
+            `;
+          });
+        }
+        detailsEl.innerHTML = conflictsHTML;
+      } else {
+        detailsEl.innerHTML = "No conflicts";
+      }
+      
+      timeSlotEl.appendChild(detailsEl);
         dayEl.appendChild(timeSlotEl);
       });
   

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +69,23 @@
     align-items: center;
     justify-content: center;
     color: white;
+    cursor: pointer;
+    position: relative;
   }
+  .time-slot-details {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #f1f1f1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    z-index: 10;
+    width: 100%;
+    text-align: left;
+    color: black;
+  }
+  .time-slot:hover .time-slot-details { display: block; }
   .no-conflicts { background-color: green; }
   .low-conflicts { background-color: yellow; color: black; }
   .high-conflicts { background-color: red; }
